@@ -36,7 +36,7 @@ void QuickSort(vector<int>& arr, int left, int right) {
 		
 	}
 
-	PrintArr(arr);
+	//PrintArr(arr);
 
 	if (left < j)
 		QuickSort(arr, left, j);
@@ -48,7 +48,7 @@ void QuickSort(vector<int>& arr, int left, int right) {
 
 
 int main() {
-	vector<int> arr = { -1,-6,0,1,1,1,-10,8,6,3,1,8,5,20 };
+	vector<int> arr = { 1,13,-4,5 };
 	QuickSort(arr, 0, arr.size() - 1);
 	PrintArr(arr);
 }

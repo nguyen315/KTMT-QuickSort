@@ -1,7 +1,7 @@
 .data
 array: .space 1024
 n: .word 0 # SL phan tu
-filename: .asciiz "input.txt"	
+filename: .asciiz "C:/Users/luffy/Desktop/GitHub/KTMT-QuickSort/input.txt"	
 buffer: .space 20
 strXuatArray: .asciiz "Array: "
 strDauPhay: .asciiz ", "
@@ -9,7 +9,7 @@ strDauPhay: .asciiz ", "
 
 .text
 main:
-
+######## Long input ###########
 #open file for read-only
 li $v0, 13
 la $a0, filename
@@ -37,23 +37,36 @@ jal readArr
 # Load dia chi array[0] vao $a0
 la $a0, array
 jal XuatArray
-j exit
+#j exit
 
+######## End of Long Input ##########
+
+
+
+######## Nguyen Quicksort ##########
 # $a1 = do doi left, $a2 = do doi right
+
+la $a0, array
 li $a1, 0
-li $a2, 12
+
+lw $t0, n
+addi $t0, $t0, -1
+li $t1, 4
+mult $t0, $t1
+
+mflo $a2
 
 jal QuickSort
+
 # Ket thuc chuong trinh
-li $v0, 10
-syscall	
+j exit
+
+###### End of Nguyen Quicksort #########
+
 
 
 ################# FUNCTION #################
 # $a0 = dia chi array[0], $a1 = do doi left, $a2 = do doi right
-
-
-
 QuickSort:
 	bge $a1, $a2, Return
 	
@@ -221,6 +234,8 @@ atoi:
     sub     $v0, $zero, $v0
 .out:
     jr      $ra         # return
+
+
 
 # xuat array
 XuatArray:

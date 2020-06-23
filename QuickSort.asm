@@ -1,8 +1,10 @@
 .data
 array: .space 1024
 n: .word 0 # SL phan tu
+
 filename: .asciiz "D:/input.txt"	
 fileOut: .asciiz "D:/output.txt"	
+
 buffer: .space 20
 strXuatArray: .asciiz "Array: "
 strDauPhay: .asciiz ", "
@@ -40,7 +42,9 @@ la $a0, array
 jal XuatArray
 #j exit
 
+
 ######## End of Long Input ##########
+
 
 
 
@@ -58,10 +62,13 @@ mult $t0, $t1
 mflo $a2
 
 jal QuickSort
+
+# Xuat ra file
 j fout
 
 # Ket thuc chuong trinh
 j exit
+
 
 ###### End of Nguyen Quicksort #########
 
@@ -280,6 +287,7 @@ XuatArray:
 
 	# Xong het thi return lai chuong trinh chinh
 	jr $ra
+
 fout:
 # allocate memory for 3 chars + \n, no need to worry about \0
 li $v0, 9

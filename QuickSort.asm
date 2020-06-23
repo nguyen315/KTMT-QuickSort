@@ -1,7 +1,10 @@
 .data
 array: .space 1024
 n: .word 0 # SL phan tu
-filename: .asciiz "C:/Users/luffy/Desktop/GitHub/KTMT-QuickSort/input.txt"	
+
+filename: .asciiz "D:/input.txt"	
+fileOut: .asciiz "D:/output.txt"	
+
 buffer: .space 20
 strXuatArray: .asciiz "Array: "
 strDauPhay: .asciiz ", "
@@ -39,7 +42,9 @@ la $a0, array
 jal XuatArray
 #j exit
 
+
 ######## End of Long Input ##########
+
 
 
 
@@ -58,8 +63,12 @@ mflo $a2
 
 jal QuickSort
 
+# Xuat ra file
+j fout
+
 # Ket thuc chuong trinh
 j exit
+
 
 ###### End of Nguyen Quicksort #########
 
@@ -279,9 +288,60 @@ XuatArray:
 	# Xong het thi return lai chuong trinh chinh
 	jr $ra
 
-############# Ket thuc xuat phan tu
+fout:
+# allocate memory for 3 chars + \n, no need to worry about \0
+li $v0, 9
+li $a0, 10   # allocate 4 bytes for 4 chars
+syscall
+move $s0, $v0
+li $t6, 40
+move $t7, $t6
+la $t4, array
+move $t6, $t4
+add $t4, $t4, $t7
+j loopOutPut
 
-# -- end program
+
+loopOutPut:
+lw $t5, 0($t4)
+move $t3, $t5
+addi $t3, $t3, 48
+sb $t3, 0($s0)
+
+
+
+beq $t4, $t6, writeFile
+addi, $s0, $s0, -1
+li $t3, 32
+sb $t3, 0($s0)
+addi $t4, $t4, -4
+addi, $s0, $s0, -1
+j loopOutPut
+writeFile:
+
+# Mo file de ghi
+li   $v0, 13       # system call for open file
+la   $a0, fileOut     # file output
+li   $a1, 1       # co ghi = 1
+li   $a2, 0      
+syscall            # mo file
+move $s6, $v0      # luu mo ta file va $s6
+
+# Ghi file
+li   $v0, 15       # ghi file
+move $a0, $s6     
+move $a1, $s0     
+la $s1, n
+lw $t1, 0($s1)
+add $t1, $t1, $t1
+move   $a2, $t1        # chieu dai array
+syscall            # ghi vao file
+
+# dong file
+li   $v0, 16       
+move $a0, $s6  
+syscall            
+
 exit:
 li $v0, 10
 syscall

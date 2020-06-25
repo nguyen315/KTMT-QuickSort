@@ -20,7 +20,7 @@ void QuickSort(vector<int>& arr, int left, int right) {
 
 	int i = left, j = right;
 
-	while (i < j) {
+	while (i <= j) {
 		while (arr[i] < middle) i++;
 		while (arr[j] > middle) j--;
 

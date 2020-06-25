@@ -1,9 +1,9 @@
 .data
-array: .space 1024
+array: .space 5000
 n: .word 0 # SL phan tu
 
-filename: .asciiz "D:/input.txt"	
-fileOut: .asciiz "D:/output.txt"	
+filename: .asciiz "input_sort.txt"	
+fileOut: .asciiz "output_sort.txt"	
 
 buffer: .space 20
 strXuatArray: .asciiz "Array: "
@@ -38,9 +38,9 @@ la $a0, buffer
 jal readArr
 
 # Load dia chi array[0] vao $a0
-la $a0, array
-jal XuatArray
-#j exit
+# la $a0, array
+# jal XuatArray
+# j exit
 
 
 ######## End of Long Input ##########
@@ -92,7 +92,7 @@ QuickSort:
 
 	LoopChinh:
 
-		bge $t3, $t4, DeQuy
+		bgt $t3, $t4, DeQuy
 		LoopI:
 			add $t0, $a0, $t3
 			lw $s0, ($t0)
@@ -133,8 +133,8 @@ QuickSort:
 			addi $t3, $t3, 4
 			addi $t4, $t4, -4
 		
-		# j lai vong lap
-		j LoopChinh
+			# j lai vong lap
+			j LoopChinh
 
 
 	DeQuy:

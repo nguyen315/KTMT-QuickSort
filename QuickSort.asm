@@ -1,11 +1,9 @@
 .data
 array: .space 5000
 n: .word 0 # SL phan tu
-
 filename: .asciiz "input_sort.txt"	
 fileOut: .asciiz "output_sort.txt"	
-
-buffer: .space 20
+buffer: .space 5000
 strXuatArray: .asciiz "Array: "
 strDauPhay: .asciiz ", "
 
@@ -25,7 +23,7 @@ add $s0, $v0, $0
 li $v0, 14
 add $a0, $s0, $0
 la $a1, buffer
-li $a2, 100
+li $a2, 5000
 syscall
 
 #close file
@@ -37,14 +35,10 @@ syscall
 la $a0, buffer
 jal readArr
 
-# Load dia chi array[0] vao $a0
-# la $a0, array
-# jal XuatArray
-# j exit
 
+#j exit
 
 ######## End of Long Input ##########
-
 
 
 
@@ -63,12 +57,13 @@ mflo $a2
 
 jal QuickSort
 
-# Xuat ra file
+# Load dia chi array[0] vao $a0
+# la $a0, array
+# jal XuatArray
 j fout
 
 # Ket thuc chuong trinh
 j exit
-
 
 ###### End of Nguyen Quicksort #########
 
@@ -133,8 +128,8 @@ QuickSort:
 			addi $t3, $t3, 4
 			addi $t4, $t4, -4
 		
-			# j lai vong lap
-			j LoopChinh
+		# j lai vong lap
+		j LoopChinh
 
 
 	DeQuy:
@@ -287,15 +282,14 @@ XuatArray:
 
 	# Xong het thi return lai chuong trinh chinh
 	jr $ra
-
 fout:
 	li $s4, 0
 	li $t2, 10
 	li $v0, 9
-	li $a0, 10   # allocate 4 bytes for 4 chars
+	li $a0, 10  # allocate 4 bytes for 4 chars
 	syscall
 	move $s0, $v0
-	li $t6, 40
+	li $t6, 4000
 	move $t7, $t6
 	la $t4, array
 	move $t6, $t4
